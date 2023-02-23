@@ -1,4 +1,4 @@
-import axios from "axios"
+
 import express from "express"
 const app = express()
 
@@ -14,6 +14,10 @@ import mysql from "mysql"
 const connection = mysql.createConnection(config)
 
 app.use(express.json())
+
+const sqlCreate = `CREATE TABLE IF NOT EXISTS people (name varchar(255), ID int not null AUTO_INCREMENT, PRIMARY KEY (ID))`
+connection.query(sqlCreate)
+
 const sql = `INSERT INTO people(name) values('Marcelo')`
 connection.query(sql)
 
