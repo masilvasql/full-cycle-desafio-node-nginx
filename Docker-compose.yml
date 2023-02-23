@@ -14,11 +14,13 @@ services:
   app:
     build:
       context: ./nodeJS
-    container_name: app
-    networks:
-      - node-network
     volumes:
       - ./nodeJS:/usr/src/app
+    container_name: app
+    entrypoint: dockerize -wait tcp://db:3306 -timeout 20s docker-entrypoint.sh
+    command: npm start
+    networks:
+      - node-network
     tty: true
     ports:
       - 3000:3000
@@ -45,3 +47,4 @@ services:
 networks:
   node-network:
     driver: bridge
+
